@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 class Sudoku{
@@ -19,18 +19,23 @@ class Sudoku{
 		flip(int n);
 		//when input n==0,flip the board vertically.Otherwise,flip it horizontally.
 		//input 0<=n<=1
-		transform()ing namespace std;
-
-class Sudoku{
-
-        public:
-                void giveQuestion();//output 81 digits
-                void readIn();//input 81 digit,and Read in Sudoku board
-                void solve();
-                //use the ReadIn data and output slovable/unsolable(if solvable print 1 and the answer
-                void changeNum(int a,int b);//exchange the number a and b in Sudo
-
+		transform();
 
 	private:
-
+		//the data for readIn()and solve()
+		vector<int> board[81];
+		vector<int> tempNum[81];
+		int tempSp=0;
+		vector<int> startR[81];
+		vector<int> startC[81];
+		vector<int> startB[81];
+		vector<int> addR[9];
+		vector<int> addC[9];
+		vecotr<int> addB[9];
+		int init(){};
+		int printBoard();
+		int tryAns();
+		int getNextBlank(int sp);
+		int check(int sp);
+		int check1(int sp,int start,v.begin(),v.end());
 }
