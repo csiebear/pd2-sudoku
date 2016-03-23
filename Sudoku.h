@@ -24,19 +24,19 @@ class Sudoku{
 		void printBoard();
 	private:
 		//the data for readIn()and solve()
-
 		int board[81];
 		int tempNum[81];
-		static int tempSp;
+		int tempSp;
 		int startR[81];
 		int startC[81];
 		int startB[81];
 		int addR[9];
 		int addC[9];
 		int addB[9];
-		int init(){};
-		int tryAns();
+		void init();
 		int getNextBlank(int sp);
 		int check(int sp);
-		int check1(int sp,int start,int *vecPtr);
+		int check1(int sp,int start,int *);
+		int pop();
+		int push(int);
 };
