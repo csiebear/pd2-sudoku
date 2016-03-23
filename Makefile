@@ -4,5 +4,5 @@ Sudoku.o: Sudoku.h Sudoku.cpp
 	g++ -c Sudoku.cpp
 main.o:main.cpp Sudoku.h
 	g++ -c main.cpp
-clean:
+clear:
 	rm *.o

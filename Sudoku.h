@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 class Sudoku{
@@ -16,26 +17,26 @@ class Sudoku{
 		//the same concept as changeRow,but now we change the column
 		void rotate(int n);
 		//Rotate the board clockwise 90 degree,and the input n between 0 and 100
-		flip(int n);
+		void flip(int n);
 		//when input n==0,flip the board vertically.Otherwise,flip it horizontally.
 		//input 0<=n<=1
-		transform();
-
+		void transform();
+		void printBoard();
 	private:
 		//the data for readIn()and solve()
-		vector<int> board[81];
-		vector<int> tempNum[81];
-		int tempSp=0;
-		vector<int> startR[81];
-		vector<int> startC[81];
-		vector<int> startB[81];
-		vector<int> addR[9];
-		vector<int> addC[9];
-		vecotr<int> addB[9];
+
+		int board[81];
+		int tempNum[81];
+		static int tempSp;
+		int startR[81];
+		int startC[81];
+		int startB[81];
+		int addR[9];
+		int addC[9];
+		int addB[9];
 		int init(){};
-		int printBoard();
 		int tryAns();
 		int getNextBlank(int sp);
 		int check(int sp);
-		int check1(int sp,int start,v.begin(),v.end());
-}
+		int check1(int sp,int start,int *vecPtr);
+};

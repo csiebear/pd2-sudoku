@@ -7,6 +7,6 @@ int main(){
 	Sudoku sudoku;
 	sudoku.readIn();
 	sudoku.printBoard();
-	sudoku.changeNum(1,4);
+	sudoku.changeRow(1,2);
 	sudoku.printBoard();
 }
