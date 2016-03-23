@@ -46,15 +46,29 @@ void Sudoku::changeNum(int a,int b){
 void Sudoku::changeRow(int a,int b){
 	int temp;
 	if((0<=a and a<=2) and (0<=b and 0<=b)){
-	//first for is for the row set
-			for(int row=0;row<3;row++){
-				for(int col=0;col<length;col++){
-					temp=board[(a*3+row)*9+col];
-					board[(a*3+row)*9+col]=board[(b*3+row)*9+col];
-					board[(b*3+row)*9+col]=temp;
-				}
+		for(int row=0;row<3;row++){
+			for(int col=0;col<length;col++){
+				temp=board[(a*3+row)*9+col];
+				board[(a*3+row)*9+col]=board[(b*3+row)*9+col];
+				board[(b*3+row)*9+col]=temp;
 			}
 		}
+	}
+	else
+		cerr<<"The parameter is illegal(0<=a,b<=2)";
+}
+
+void Sudoku::changeCol(int a,int b){
+	int temp;
+	if((0<=a and a<=2) and (0<=b and 0<=b)){
+		for(int col=0;col<3;col++){
+			for(int row=0;row<length;row++){
+				temp=board[(a*3+row)*9+col];
+				board[(a*3+row)*9+col]=board[(b*3+row)*9+col];
+				board[(b*3+row)*9+col]=temp;
+			}
+		}
+	}
 	else
 		cerr<<"The parameter is illegal(0<=a,b<=2)";
 }
