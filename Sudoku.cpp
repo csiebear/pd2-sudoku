@@ -176,6 +176,8 @@ void Sudoku::solve() {
 			}//end if
 		}//end else
 	}while(sp>=0 && sp<Size);
+	cout<<"1"<<endl;//未來要新增判斷是否為0:無解,1:唯一解,2:多組解
+	printBoard();
 }
 
 int Sudoku::push(int sp){
@@ -185,4 +187,12 @@ int Sudoku::push(int sp){
 int Sudoku::pop(){
 	if(tempSp<=0) return -1;
 	else return (tempNum[--tempSp]);
+}
+
+void Sudoku::flip(int n){
+
+}
+
+void Sudoku::transform(){
+	
 }
