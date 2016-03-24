@@ -1,10 +1,31 @@
 #include "Sudoku.h"
 #include <vector>
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #define Size 81
 #define length 9
 
 using namespace std;
+
+void Sudoku::giveQuestion(){
+	srand(time(NULL));	
+	int random=(rand()%10)+1;
+	cout<<"The random number:"<<random<<endl;
+	int q1[81]={8,0,0,0,0,0,0,0,0,
+				0,0,3,6,0,0,0,0,0,
+				0,7,0,0,9,9,2,0,0,
+				0,5,0,0,0,7,0,0,0,
+				0,0,0,0,4,5,7,0,0,
+				0,0,0,1,0,0,0,3,0,
+				0,0,1,0,0,0,0,6,8,
+				0,0,8,5,0,0,0,1,0,
+				0,9,0,0,0,0,4,0,0	
+				};
+	for(int i=0;i<Size;i++)
+		board[i]=q1[i];
+	printBoard();
+}
 
 //Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){

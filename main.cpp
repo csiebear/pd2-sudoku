@@ -5,6 +5,9 @@ using namespace std;
 
 int main(){
 	Sudoku sudoku;
+	sudoku.giveQuestion();
+	sudoku.solve();
+	sudoku.printBoard();
 //	sudoku.readIn();
 //	sudoku.printBoard();
 //	sudoku.changeRow(1,2);
