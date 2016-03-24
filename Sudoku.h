@@ -22,6 +22,7 @@ class Sudoku{
 		//input 0<=n<=1
 		void transform();
 		void printBoard();
+		int searchZero();
 	private:
 		//the data for readIn()and solve()
 		int board[81];

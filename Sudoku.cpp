@@ -176,8 +176,13 @@ void Sudoku::solve() {
 			}//end if
 		}//end else
 	}while(sp>=0 && sp<Size);
-	cout<<"1"<<endl;//未來要新增判斷是否為0:無解,1:唯一解,2:多組解
-	printBoard();
+	
+	if(searchZero()!=-1)
+		cout<<"0"<<endl;//未來要新增判斷是否為0:無解,1:唯一解,2:多組解
+	else{ 	
+		cout<<"1"<<endl;
+		printBoard();
+	}	
 }
 
 int Sudoku::push(int sp){
@@ -199,6 +204,12 @@ void Sudoku::transform(){
 	cout<<"The random number:"<<random<<endl;
 	changeCol(time(NULL)%3,random%3);
 	printBoard();
-
-						
+}
+int Sudoku::searchZero(){
+	//search the 0 in the board,if the board have 0,return the position.Otherwise,return -1(mean no 0)
+	for(int i=0;i<Size;i++){
+		if(board[i]==0)
+			return i;
+	}
+	return -1;
 }

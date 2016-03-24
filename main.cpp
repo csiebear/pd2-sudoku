@@ -6,9 +6,13 @@ using namespace std;
 int main(){
 	cout<<"Test solve!"<<endl;
 	Sudoku sudoku;
+	
 	sudoku.readIn();
 	cout<<"Origin:"<<endl;
 	sudoku.printBoard();
+	int index=sudoku.searchZero();
+	cout<<"The first zero in"<<index<<endl;
+	
 	cout<<"Solve it"<<endl;
 	sudoku.solve();
 	cout<<"Answer："<<endl;
