@@ -4,10 +4,18 @@
 using namespace std;
 
 int main(){
+	cout<<"Test solve!"<<endl;
 	Sudoku sudoku;
-	sudoku.giveQuestion();
-	sudoku.solve();
+	sudoku.readIn();
+	cout<<"Origin:"<<endl;
 	sudoku.printBoard();
+	cout<<"Solve it"<<endl;
+	sudoku.solve();
+	cout<<"Answer："<<endl;
+	sudoku.printBoard();
+	cout<<"Test transform!"<<endl;
+	sudoku.readIn();
+	sudoku.transform();
 //	sudoku.readIn();
 //	sudoku.printBoard();
 //	sudoku.changeRow(1,2);

@@ -194,5 +194,11 @@ void Sudoku::flip(int n){
 }
 
 void Sudoku::transform(){
-	
+	srand(time(NULL));	
+	int random=(rand()%10)+1;
+	cout<<"The random number:"<<random<<endl;
+	changeCol(time(NULL)%3,random%3);
+	printBoard();
+
+						
 }
