@@ -39,4 +39,5 @@ class Sudoku{
 		int check1(int sp,int start,int *);
 		int pop();
 		int push(int);
+		void rotate90degree();
 };

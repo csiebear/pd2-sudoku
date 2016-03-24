@@ -22,6 +22,10 @@ int main(){
 	
 	sudoku.readIn();
 	sudoku.printBoard();
-	sudoku.solve();
+/*旋轉*/
+	sudoku.rotate(2);	
 	sudoku.printBoard();
+
+//	sudoku.solve();
+//	sudoku.printBoard();
 }

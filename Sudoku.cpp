@@ -6,19 +6,22 @@
 
 using namespace std;
 
+//Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){
 	int digit;
 	for(int i=0;i<Size;i++){
 		cin>>board[i];
 	}
 }
+
+//Print the board,if the column(i+1) equals to 9 print the number and endline,
+//else only print the number
 void Sudoku::printBoard(){
 	for(int i=0;i<Size;i++){
 		if((i+1)%9==0){
 			cout<<board[i]<<" "<<endl;
 		}else
 			cout<<board[i]<<" ";
-		
 	}
 }
 
@@ -68,7 +71,32 @@ void Sudoku::changeCol(int a,int b){
 		}
 	}
 	else
-		cerr<<"The parameter is illegal(0<=a,b<=2)";
+		cerr<<"The parameter is illegal(0<=a,b<=2)"<<endl;
+}
+
+void Sudoku::rotate(int n){
+	if(n>=0 and n<=100){
+		for(int i=0;i<(n%4);i++){
+			rotate90degree();	
+		}
+	}
+	else
+		cerr<<"The parameter is illegal(0<=n<=100)"<<endl;
+}
+
+void Sudoku::rotate90degree(){
+	int cnd=length/2;
+	int tmp=0;
+	for(int i=0;i<cnd;++i){
+		int side=length-1-2*i;
+		for(int j=i;j<side+i;++j){ 
+			tmp = board[j*length+i];						/* m[j][i]*/
+			board[j*length+i]=board[length*(i+side)+j];			/* m[i+ss][j]*/
+		    board[length*(i+side)+j] = board[length*(length-j-1)+i+side]; /* m[dim-j-1][i+ss] */
+		    board[length*(length-j-1)+i+side] = board[i*length+length-j-1]; /* m[i][dim-j-1] */
+		   	board[i*length+length-j-1] = tmp;             /* m[dim-j-1][i+ss] */
+		}//end inner for-loop
+	}//end outer for-loop
 }
 
 void Sudoku::init(){
