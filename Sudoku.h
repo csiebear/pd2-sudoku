@@ -21,8 +21,9 @@ class Sudoku{
 			int searchZero();
 			int validate();//check the board is True or false
 			void topSolve(int b[81]);//the result put into the board
+			void downSolve(int b[81]);
 			int multiSolve();
-																													private:
+		private:
 			//the data for readIn()and solve()
 			int solveboard[81];
 			int checkboard[81];
@@ -38,6 +39,7 @@ class Sudoku{
 			int copyForSolve();
 			int copyForCheck();
 			int getNextBlank(int b[81],int sp);
+			int getNextBlank2(int b[81],int sp);
 			void init();
 			int check(int b[81],int sp);
 			int check1(int b[81],int sp,int start,int *);

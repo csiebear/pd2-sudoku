@@ -142,7 +142,10 @@ int Sudoku::searchZero(){
 
 int Sudoku::copyForCheck(){
 	for(int i=0;i<Size;i++){
-		checkboard[i]=board[i];
+		if(board[i]==0)
+			checkboard[i]=10;
+		else
+			checkboard[i]=board[i];
 	}
 }
 int Sudoku::copyForSolve(){
@@ -185,12 +188,14 @@ int Sudoku::multiSolve(){
 //solve from the origin board[0]
 	copyForSolve();
 	topSolve(solveboard);
-//solve from the check[0]
+	copyForCheck();
+	downSolve(checkboard);
+/*//solve from the check[0]
 	copyForCheck();
 	rotate90degree(checkboard);
 	topSolve(checkboard);
 	for(int i=0;i<3;i++)
-		rotate90degree(checkboard);
+		rotate90degree(checkboard);*/
 	for(int i=0;i<Size;i++){	
 		if(board[i]==solveboard[i])
 			noAns++;
@@ -235,7 +240,22 @@ void Sudoku::topSolve(int b[81]){
 		}//end else
 	}while(sp>=0 && sp<Size);
 }
-
+void Sudoku::downSolve(int b[81]){
+	init();
+	int sp=getNextBlank2(b,-1);// 取得第一個空白的位置開始填入數字
+	do{
+		b[sp]--;
+		if(b[sp]<1) {
+		b[sp]= 10 ;
+		sp=pop() ;
+	}else{
+		if(check(b,sp)==0){	//如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
+		push(sp);
+		sp=getNextBlank2(b,sp);
+			}//end else
+		}//end else
+	}while(sp>=0 && sp<Size);
+}
 
 int Sudoku::validate(){
 	int result;//0:mean no flase digit in the board
@@ -251,6 +271,14 @@ int Sudoku::getNextBlank(int b[81],int sp){
 	}while(sp<Size && b[sp]>0);
 	return sp;
 }
+int Sudoku::getNextBlank2(int b[81],int sp){
+	do{
+	sp++;
+	}while(sp<Size && b[sp]<10);
+	return sp;
+}
+
+
 int Sudoku::check1(int b[81],int sp, int start, int *addnum) {
 // 檢查指定的行、列、九宮格有沒有相同的數字，若有傳回 1
 	int fg= 0, i, sp1  ;
