@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#define Size 81
 using namespace std;
 
 class Sudoku{
@@ -22,29 +22,10 @@ class Sudoku{
 		//input 0<=n<=1
 		void transform();
 		void printBoard();
-		void printSolve();
 		int searchZero();
-		int validate();//check the board is True or false
-		void topSolve();//the result put into the board
-		int backSolve();//the result put into the
 	private:
 		//the data for readIn()and solve()
-		int solve_board[81];
-		int board[81];
-		int tempNum[81];
-		int tempSp;
-		int startR[81];//starting index for each row
-		int startC[81];//starting index for each column
-		int startB[81];//starting index for each block(3*3)
-		int addR[9];//the number added for moving to next row
-		int addC[9];//the number added for moving to next column
-		int addB[9];//the number added for moving to next block
-		void init();//initilize the some parameter
-		int getNextBlank(int sp);
-		int getLastBlank(int sp);
-		int check(int sp);
-		int check1(int sp,int start,int *);
-		int pop();
-		int push(int);
+		int board[Size];
+		int Sol[Size];
 		void rotate90degree();
 };

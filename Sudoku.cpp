@@ -32,6 +32,7 @@ void Sudoku::readIn(){
 	int digit;
 	for(int i=0;i<Size;i++){
 		cin>>board[i];
+		solve_board[i]=board[i];
 	}
 }
 
@@ -45,6 +46,16 @@ void Sudoku::printBoard(){
 			cout<<board[i]<<" ";
 	}
 }
+//For test backsolve
+void Sudoku::printSolve(){
+	for(int i=0;i<Size;i++){
+		if((i+1)%9==0){
+			cout<<solve_board[i]<<" "<<endl;
+		}else
+			cout<<solve_board[i]<<" ";
+	}
+}
+
 
 void Sudoku::changeNum(int a,int b){
 	if( (1<=a and a<=9) and (1<=b and b <=9)){
@@ -120,8 +131,97 @@ void Sudoku::rotate90degree(){
 	}//end outer for-loop
 }
 
+void Sudoku::flip(int n){
+
+}
+
+void Sudoku::transform(){
+	srand(time(NULL));	
+	int random=(rand()%10)+1;
+	cout<<"The random number:"<<random<<endl;
+	changeCol(time(NULL)%3,random%3);
+	printBoard();
+}
+int Sudoku::searchZero(){
+	//search the 0 in the board,if the board have 0,return the position.Otherwise,return -1(mean no 0)
+	int count=0;
+	for(int i=0;i<Size;i++){
+		solve_board[i]=board[i];//copy one Sudoku board for solving
+		if(solve_board[i]==0)
+			count++;
+	}
+	return count;
+}
+
+
+void Sudoku::solve(){
+	if(searchZero()==0){//No digit is zero,and then check the board correctness
+		if(validate()==1){//do not solve just print result and board
+			cout<<"1"<<endl;
+			printBoard();
+		}else
+   			cout<<"0"<<endl;
+	}else{
+	//At least one digit is zero
+		topSolve();
+		if(backSolve()==1){
+		cout<<"1"<<endl;
+		printBoard();
+		}//end if
+	cout<<"2"<<endl;//mean at least have two solution
+	}
+}
+
+void Sudoku::topSolve(){
+	init();//initilize the parameter
+	int sp=getNextBlank(-1);// 取得第一個空白的位置開始填入數字
+	do{
+		board[sp]++;            // 將本位置數字加 1
+		if(board[sp]>9) {		// 如果本位置的數字已大於 9 時則回到上一個位置繼續測試
+			board[sp]= 0 ;
+			sp=pop() ;
+		}else{
+			if(check(sp)==0){	//如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
+			push(sp);
+			sp=getNextBlank(sp);
+			}//end else
+		}//end else
+	}while(sp>=0 && sp<Size);
+}
+
+
+int Sudoku::backSolve(){
+	int sp=getLastBlank(82);// 取得第一個空白的位置開始填入數字
+	int sameOrNot=82;
+	do{
+		solve_board[sp]++;            // 將本位置數字加 1
+		if(solve_board[sp]>9) {		// 如果本位置的數字已大於 9 時則回到上一個位置繼續測試
+			solve_board[sp]= 0 ;
+			sp=pop() ;
+		}else{
+			if(check(sp)==0){	//如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
+			push(sp);
+			sp=getNextBlank(sp);
+			}//end else
+		}//end else
+	}while(sp>=0 && sp<Size);
+	for(int i=0;i<Size;i++){
+		if(board[i]==solve_board[i])
+			sameOrNot--;
+	}//If array content is the same,the the return value equals to 1
+	return sameOrNot;
+}
+
+int Sudoku::validate(){
+	int result;//0:mean no flase digit in the board
+	init();
+	for(int i=0;i<Size;i++)
+		result=check(i)+1;
+	return result;	
+}
+
+//the solve()'s sub function
 void Sudoku::init(){
-	//Parameter initialization	參數初始化
 	tempSp=0;
 	int i;
 	for(i=0;i<Size;i++){
@@ -136,22 +236,29 @@ void Sudoku::init(){
 	}
 }
 
-int Sudoku::getNextBlank(int sp){
+int Sudoku::getLastBlank(int sp){
 	do{
-		sp++;
-	}while(sp<Size && board[sp]>0);
+	sp--;
+	}while(sp>=0 && solve_board[sp]>0 );
 	return sp;
 }
 
+int Sudoku::getNextBlank(int sp){
+	do{
+	sp++;
+	}while(sp<Size && board[sp]>0);
+	return sp;
+}
 int Sudoku::check1(int sp, int start, int *addnum) {
 // 檢查指定的行、列、九宮格有沒有相同的數字，若有傳回 1
 	int fg= 0, i, sp1  ;
 	for(i=0; i<9; i++) {
-	sp1= start+ addnum[i] ;
-	if(sp!=sp1 && board[sp]==board[sp1]) fg++ ;
+		sp1= start+ addnum[i] ;
+		if(sp!=sp1 && board[sp]==board[sp1]) fg++ ;
 	}
 	return(fg);
 }
+
 
 int Sudoku::check(int sp){
 	int fg=0;
@@ -160,31 +267,6 @@ int Sudoku::check(int sp){
 	if(!fg) fg= check1(sp, startB[sp], addB) ;   // 檢查同九宮格有沒有相同的數字
 	return(fg);
 }
-
-void Sudoku::solve() {
-	init();
-	int sp=getNextBlank(-1) ;                    // 取得第一個空白的位置開始填入數字
-	do{
-		board[sp]++;                            // 將本位置數字加 1
-		if(board[sp]>9) {                        // 如果本位置的數字已大於 9 時則回到上一個位置繼續測試
-			board[sp]= 0 ;
-			sp=pop() ;
-		}else{
-			if(check(sp)==0){                     // 如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
-				push(sp);
-				sp=getNextBlank(sp);
-			}//end if
-		}//end else
-	}while(sp>=0 && sp<Size);
-	
-	if(searchZero()!=-1)
-		cout<<"0"<<endl;//未來要新增判斷是否為0:無解,1:唯一解,2:多組解
-	else{ 	
-		cout<<"1"<<endl;
-		printBoard();
-	}	
-}
-
 int Sudoku::push(int sp){
 	tempNum[tempSp++]=sp;
 }
@@ -192,24 +274,4 @@ int Sudoku::push(int sp){
 int Sudoku::pop(){
 	if(tempSp<=0) return -1;
 	else return (tempNum[--tempSp]);
-}
-
-void Sudoku::flip(int n){
-
-}
-
-void Sudoku::transform(){
-	srand(time(NULL));	
-	int random=(rand()%10)+1;
-	cout<<"The random number:"<<random<<endl;
-	changeCol(time(NULL)%3,random%3);
-	printBoard();
-}
-int Sudoku::searchZero(){
-	//search the 0 in the board,if the board have 0,return the position.Otherwise,return -1(mean no 0)
-	for(int i=0;i<Size;i++){
-		if(board[i]==0)
-			return i;
-	}
-	return -1;
 }

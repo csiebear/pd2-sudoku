@@ -11,12 +11,13 @@ int main(){
 	cout<<"Origin:"<<endl;
 	sudoku.printBoard();
 	int index=sudoku.searchZero();
-	cout<<"The first zero in"<<index<<endl;
+	cout<<"The number of 0:"<<index<<endl;
 	
 	cout<<"Solve it"<<endl;
 	sudoku.solve();
 	cout<<"Answer："<<endl;
 	sudoku.printBoard();
+	sudoku.printSolve();
 	cout<<"Test transform!"<<endl;
 	sudoku.readIn();
 	sudoku.transform();
