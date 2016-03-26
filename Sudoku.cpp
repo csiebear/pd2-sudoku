@@ -12,15 +12,15 @@ void Sudoku::giveQuestion(){
 	srand(time(NULL));	
 	int random=(rand()%10)+1;
 	cout<<"The random number:"<<random<<endl;
-	int q1[81]={8,0,0,0,0,0,0,0,0,
-				0,0,3,6,0,0,0,0,0,
-				0,7,0,0,9,9,2,0,0,
-				0,5,0,0,0,7,0,0,0,
-				0,0,0,0,4,5,7,0,0,
-				0,0,0,1,0,0,0,3,0,
-				0,0,1,0,0,0,0,6,8,
+	int q1[81]={5,3,0,0,7,0,0,0,0,
+				6,0,0,1,9,5,0,0,0,
+				0,9,8,0,0,0,0,6,0,
+				8,0,0,0,6,0,0,0,3,
+				4,0,0,8,0,3,0,0,1,
+				7,0,0,0,2,0,0,0,6,
+				0,6,0,0,0,0,2,8,0,
 				0,0,8,5,0,0,0,1,0,
-				0,9,0,0,0,0,4,0,0	
+				0,0,0,0,8,0,0,7,9	
 				};
 	for(int i=0;i<Size;i++)
 		board[i]=q1[i];
@@ -29,8 +29,7 @@ void Sudoku::giveQuestion(){
 
 //Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){
-	int digit;
-	for(int i=0;i<Size;i++){
+	for(int i=0;i<length;i++){
 		cin>>board[i];
 	}
 }
