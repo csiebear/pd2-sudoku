@@ -21,15 +21,15 @@ class Sudoku{
 		//when input n==0,flip the board vertically.Otherwise,flip it horizontally.
 		//input 0<=n<=1
 		void transform();
-		void printBoard();
-		void printSolve();
+		void printBoard(int *);
 		int searchZero();
 		int validate();//check the board is True or false
-		void topSolve();//the result put into the board
-		int backSolve();//the result put into the
+		void topSolve(int *);//the result put into the board
+		int multiSolve();
 	private:
 		//the data for readIn()and solve()
-		int solve_board[81];
+		int solveboard[81];
+		int checkboard[81];
 		int board[81];
 		int tempNum[81];
 		int tempSp;
@@ -39,12 +39,13 @@ class Sudoku{
 		int addR[9];//the number added for moving to next row
 		int addC[9];//the number added for moving to next column
 		int addB[9];//the number added for moving to next block
-		void init();//initilize the some parameter
-		int getNextBlank(int sp);
-		int getLastBlank(int sp);
-		int check(int sp);
-		int check1(int sp,int start,int *);
+		int copyForSolve();
+		int copyForCheck();
+		int getNextBlank(int *,int sp);
+		void init();
+		int check(int *,int sp);
+		int check1(int *,int sp,int start,int *);
 		int pop();
 		int push(int);
-		void rotate90degree();
+		void rotate90degree(int *);
 };
