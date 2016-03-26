@@ -173,8 +173,6 @@ void Sudoku::solve(){
 				break;
 			case 2:
 				cout<<"2";
-				printBoard(solveboard);
-				printBoard(checkboard);
 				break;
 			default:
 				cout<<"0";

@@ -1,6 +1,7 @@
 #include "Sudoku.h"
 int main(){
 	Sudoku ss;
-	ss.giveQuestion();
+	ss.readIn();
+	ss.solve();
 	return 0;
 }
