@@ -26,17 +26,16 @@ void Sudoku::giveQuestion(){
 		board[i]=q1[i];
 	printBoard(board);
 }
-
 //Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){
-	for(int i=0;i<length;i++){
+	for(int i=0;i<Size;i++){
 		cin>>board[i];
 	}
 }
 
 //Print the board,if the column(i+1) equals to 9 print the number and endline,
 //else only print the number
-void Sudoku::printBoard(int b[]){
+void Sudoku::printBoard(int b[81]){
 	for(int i=0;i<Size;i++){
 		if((i+1)%9==0){
 			cout<<b[i]<<" "<<endl;
@@ -105,7 +104,7 @@ void Sudoku::rotate(int n){
 }
 
 
-void Sudoku::rotate90degree(int b[]){
+void Sudoku::rotate90degree(int b[81]){
 	int cnd=length/2;
 	int tmp=0;
 	for(int i=0;i<cnd;++i){
@@ -154,27 +153,31 @@ int Sudoku::copyForSolve(){
 
 void Sudoku::solve(){
 	if(searchZero()==0){//No digit is zero,and then check the board correctness
-	/*	if(validate()==1){//do not solve just print result and board
+		if(validate()==1){//do not solve just print result and board
 			cout<<"1"<<endl;
-			printBoard(board);*/
-		cout<<"0"<<endl;
+			printBoard(board);
+		}else{
+			cout<<"0"<<endl;
+		}
 	}else{
 		switch(multiSolve()){
-		case 0:
-			cout<<"0";
-			break;
-		case 1:
-			cout<<"1"<<endl;
-			printBoard(solveboard);
-			break;
-		case 2:
-			cout<<"2";
-			break;
-		default:
-			cout<<"0";
-			break;
+			case 0:
+				cout<<"0";
+				break;
+			case 1:
+				cout<<"1"<<endl;
+				printBoard(solveboard);
+				break;
+			case 2:
+				cout<<"2";
+				printBoard(solveboard);
+				printBoard(checkboard);
+				break;
+			default:
+				cout<<"0";
+				break;
 		}
-	}
+		}	
 }
 int Sudoku::multiSolve(){
 	int noAns=0;
@@ -216,18 +219,18 @@ void Sudoku::init(){
 		addB[i]=(i/3)*9+(i%3);
 	}
 }
-void Sudoku::topSolve(int board[]){
+void Sudoku::topSolve(int b[81]){
 	init();
-	int sp=getNextBlank(board,-1);// 取得第一個空白的位置開始填入數字
+	int sp=getNextBlank(b,-1);// 取得第一個空白的位置開始填入數字
 	do{
-		board[sp]++;            // 將本位置數字加 1
-		if(board[sp]>9) {		// 如果本位置的數字已大於 9 時則回到上一個位置繼續測試
-			board[sp]= 0 ;
+		b[sp]++;            // 將本位置數字加 1
+		if(b[sp]>9) {		// 如果本位置的數字已大於 9 時則回到上一個位置繼續測試
+			b[sp]= 0 ;
 			sp=pop() ;
 		}else{
-			if(check(board,sp)==0){	//如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
+			if(check(b,sp)==0){	//如果同行、列、九宮格都沒有相同的數字，則到下一個空白處繼續
 			push(sp);
-			sp=getNextBlank(board,sp);
+			sp=getNextBlank(b,sp);
 			}//end else
 		}//end else
 	}while(sp>=0 && sp<Size);
@@ -242,13 +245,13 @@ int Sudoku::validate(){
 	return result;	
 }
 
-int Sudoku::getNextBlank(int b[],int sp){
+int Sudoku::getNextBlank(int b[81],int sp){
 	do{
 	sp++;
 	}while(sp<Size && b[sp]>0);
 	return sp;
 }
-int Sudoku::check1(int b[],int sp, int start, int *addnum) {
+int Sudoku::check1(int b[81],int sp, int start, int *addnum) {
 // 檢查指定的行、列、九宮格有沒有相同的數字，若有傳回 1
 	int fg= 0, i, sp1  ;
 	for(i=0; i<9; i++) {
@@ -259,7 +262,7 @@ int Sudoku::check1(int b[],int sp, int start, int *addnum) {
 }
 
 
-int Sudoku::check(int b[],int sp){
+int Sudoku::check(int b[81],int sp){
 	int fg=0;
 	if(!fg) fg= check1(b,sp, startR[sp], addR) ;   // 檢查同列有沒有相同的數字
 	if(!fg) fg= check1(b,sp, startC[sp], addC) ;   // 檢查同行有沒有相同的數字
