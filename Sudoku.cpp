@@ -161,17 +161,17 @@ void Sudoku::solve(){
 	}else{
 		switch(multiSolve()){
 		case 0:
-			cout<<"0"<<endl;
+			cout<<"0";
 			break;
 		case 1:
 			cout<<"1"<<endl;
 			printBoard(solveboard);
 			break;
 		case 2:
-			cout<<"2"<<endl;
+			cout<<"2";
 			break;
 		default:
-			cout<<"0"<<endl;
+			cout<<"0";
 			break;
 		}
 	}
