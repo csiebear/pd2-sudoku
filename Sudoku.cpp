@@ -197,15 +197,19 @@ int Sudoku::multiSolve(){
 	for(int i=0;i<Size;i++){	
 		if(board[i]==solveboard[i])
 			noAns++;
-		if(solveboard[i]==checkboard[i])
-			solution++;
+	}
+	for(int i=0;i<Size;i++){	
+		if(solveboard[i]!=checkboard[i]){
+			solution=1;
+			i=Size;
+		}
 	}
 	if(noAns==81)
 		return 0;
-	else if(solution==81)
+	else if(solution==0)
 		return 1;//mean have exactly one solution 
 	else
-		return 2;
+		return 2;//the solution=1,mean at least two result
 }
 
 void Sudoku::init(){
