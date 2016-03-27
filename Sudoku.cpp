@@ -11,7 +11,7 @@ using namespace std;
 void Sudoku::giveQuestion(){
 	srand(time(NULL));	
 	int random=(rand()%10)+1;
-	cout<<"The random number:"<<random<<endl;
+//	cout<<"The random number:"<<random<<endl;
 	int q1[81]={5,3,0,0,7,0,0,0,0,
 				6,0,0,1,9,5,0,0,0,
 				0,9,8,0,0,0,0,6,0,
@@ -124,10 +124,10 @@ void Sudoku::flip(int n){
 }
 
 void Sudoku::transform(){
-	srand(time(NULL));	
-	int random=(rand()%10)+1;
-	cout<<"The random number:"<<random<<endl;
-	changeCol(time(NULL)%3,random%3);
+//	srand(time(NULL));	
+//	int random=(rand()%10)+1;
+//	cout<<"The random number:"<<random<<endl;
+	rotate90degree(board);
 	printBoard(board);
 }
 int Sudoku::searchZero(){
