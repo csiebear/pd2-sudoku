@@ -19,19 +19,41 @@ class Sudoku{
 			void transform();
 			void print();
 			void printBoard(int b[81]);
+		//	int searchZero();
+		//	int validate();//check the board is True or false
 			void ShowAns(int b[][9]);
-			int tryAns(int b[][9],int n);
-			int tryNum(int b[][9],int n);
-			int validate();
+			int tryAns(int a[81],int b[][9],int n);
+			int tryDigits(int a[81],int b[][9],int n);
+		//	void topSolve(int b[81]);//the result put into the board
+		//	void downSolve(int b[81]);
+		//	int multiSolve();
 
 		private:
 			//the data for readIn()and solve()
 			int board[81];
 			int board2[9][9];
 			int Solve[9][9];
-			int Sol[81],Sol_x[81],Sol_y[81];
 			bool rule1,rule2;
 			int Cnt,Ans,Ans2;
 			void init();
+		//	int solveboard[81];
+		//	int checkboard[81];
+		//	int tempNum[81];
+		//	int tempSp;
+		//	int startR[81];//starting index for each row
+		//	int startC[81];//starting index for each column
+		//	int startB[81];//starting index for each block(3*3)
+		//	int addR[9];//the number added for moving to next row
+		//	int addC[9];//the number added for moving to next column
+		//	int addB[9];//the number added for moving to next block
+		//	int copyForSolve();
+		//	int copyForCheck();
+		//	int getNextBlank(int b[81],int sp);
+		//	int getNextBlank2(int b[81],int sp);
+		//	void init();
+		//	int check(int b[81],int sp);
+		//	int check1(int b[81],int sp,int start,int *);
+		//	int pop();
+		//	int push(int);
 			void rotate90degree(int b[81]);
 };
