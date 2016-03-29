@@ -74,7 +74,7 @@ void Sudoku::changeNum(int a,int b){
 
 void Sudoku::changeRow(int a,int b){
 	int temp;
-	if((0<=a and a<=2) and (0<=b and 0<=b)){
+	if((0<=a and a<=2) and (0<=b and b<=2)){
 		for(int row=0;row<3;row++){
 			for(int col=0;col<length;col++){
 				temp=board[(a*3+row)*9+col];
@@ -89,7 +89,7 @@ void Sudoku::changeRow(int a,int b){
 
 void Sudoku::changeCol(int a,int b){
 	int temp;
-	if((0<=a and a<=2) and (0<=b and 0<=b)){
+	if((0<=a and a<=2) and (0<=b and b<=2)){
 		for(int row=0;row<length;row++){
 			for(int col=b*3;col<b*3+3;col++){
 				int temp_col=col%3;
@@ -157,9 +157,7 @@ void Sudoku::flip(int n){
 						break;
 				}	
 			}
-			printBoard(board);		
-		}
-		if(n==0){
+		}else{
 			int temp,row,col;
 			for(int i=0;i<=35;i++){
 				row=i/9;
@@ -186,7 +184,6 @@ void Sudoku::flip(int n){
 						board[(row+2)*9+col]=temp;
 				}
 			}	
-			printBoard(board);
 		}
 	}else
 		cerr<<"The parameter is illegal"<<endl;

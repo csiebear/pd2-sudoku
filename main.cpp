@@ -17,6 +17,14 @@ int main(){
 	ss.changeCol(1,2);
 	ss.print();
 	ss.changeCol(2,1);
+	cout<<"Test rotate(1)"<<endl;
+	ss.rotate(1);
+	ss.print();
+	ss.rotate(2);
+	cout<<"Continue rotate(2)"<<endl;
+	ss.print();
+	ss.rotate(1);
+
 	cout<<"Test transform(clockwise rotate 90 degree),it will print the board"<<endl;
 	ss.transform();
 	return 0;
