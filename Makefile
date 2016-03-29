@@ -3,7 +3,7 @@ solve:Sudoku.o solve.o
 giveQuestion:Sudoku.o giveQuestion.o
 	g++ -o giveQuestion giveQuestion.o Sudoku.o
 transform:Sudoku.o transform.o
-	g++ -o transform transform.o Sodoku.o
+	g++ -o transform transform.o Sudoku.o
 Sudoku.o:Sudoku.h Sudoku.cpp
 	g++ -c Sudoku.cpp
 solve.o:solve.cpp Sudoku.h

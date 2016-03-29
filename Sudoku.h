@@ -17,17 +17,19 @@ class Sudoku{
 			void flip(int n);//when input n==0,flip the board vertically.Otherwise,flip it horizontally.
 			//input 0<=n<=1
 			void transform();
+			void print();
 			void printBoard(int b[81]);
 			int searchZero();
 			int validate();//check the board is True or false
 			void topSolve(int b[81]);//the result put into the board
 			void downSolve(int b[81]);
 			int multiSolve();
+
 		private:
 			//the data for readIn()and solve()
+			int board[81];
 			int solveboard[81];
 			int checkboard[81];
-			int board[81];
 			int tempNum[81];
 			int tempSp;
 			int startR[81];//starting index for each row

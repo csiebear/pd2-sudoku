@@ -1,0 +1,7 @@
+03/29
+changeNum
+	in the for loop have an error
+	because the number will being change two times,the number in fact not change correctly.
+	I modify the control flow change the 2 if into the if-else if.
+
+

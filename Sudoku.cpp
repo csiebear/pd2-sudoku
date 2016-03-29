@@ -44,21 +44,31 @@ void Sudoku::printBoard(int b[81]){
 	}
 }
 
+
+void Sudoku::print(){
+	for(int i=0;i<Size;i++){
+		if((i+1)%9==0){
+			cout<<board[i]<<" "<<endl;
+		}else
+			cout<<board[i]<<" ";
+	}
+}
+
 void Sudoku::changeNum(int a,int b){
 	if( (1<=a and a<=9) and (1<=b and b <=9)){
 	int a_pos,b_pos;
-	for(int row=0;row<length;row++){
-		for(int col=0;col<length;col++){
-			if(board[row*9+col]==a)
-				a_pos=row*9+col;
-			if(board[row*9+col]==b)
-				b_pos=row*9+col;
+		for(int row=0;row<length;row++){
+			for(int col=0;col<length;col++){
+				if(board[row*9+col]==a){
+					a_pos=row*9+col;
+					board[a_pos]=b;
+				}else if(board[row*9+col]==b){
+					b_pos=row*9+col;
+					board[b_pos]=a;
+				}
+			}
 		}
-		board[a_pos]=b;
-		board[b_pos]=a;
-	}
-	}
-	else
+	}else
 		cerr<<"The parameter is illegal"<<endl;
 }
 
@@ -120,13 +130,69 @@ void Sudoku::rotate90degree(int b[81]){
 }
 
 void Sudoku::flip(int n){
-
+	if(n==1 || n==0){	
+		if(n==1){
+			for(int i=0;i<Size;i++){
+				int temp;
+				switch (i%9){
+					case 0:
+						temp=board[i+8];
+						board[i+8]=board[i];
+						board[i]=temp;
+						break;
+					case 1:
+						temp=board[i+6];
+						board[i+6]=board[i];
+						board[i]=temp;
+						break;
+					case 2:
+						temp=board[i+4];
+						board[i+4]=board[i];
+						board[i]=temp;
+						break;
+					case 3:
+						temp=board[i+2];
+						board[i+2]=board[i];
+						board[i]=temp;
+						break;
+				}	
+			}
+			printBoard(board);		
+		}
+		if(n==0){
+			int temp,row,col;
+			for(int i=0;i<=35;i++){
+				row=i/9;
+				col=i%9;
+				switch (row){
+					case 0:
+						temp=board[i];
+						board[i]=board[(row+8)*9+col];
+						board[(row+8)*9+col]=temp;
+						break;
+					case 1:
+						temp=board[i];
+						board[i]=board[(row+6)*9+col];
+						board[(row+6)*9+col]=temp;
+						break;
+					case 2:
+						temp=board[i];
+						board[i]=board[(row+4)*9+col];
+						board[(row+4)*9+col]=temp;
+						break;
+					case 3:	
+						temp=board[i];
+						board[i]=board[(row+2)*9+col];
+						board[(row+2)*9+col]=temp;
+				}
+			}	
+			printBoard(board);
+		}
+	}else
+		cerr<<"The parameter is illegal"<<endl;
 }
 
 void Sudoku::transform(){
-//	srand(time(NULL));	
-//	int random=(rand()%10)+1;
-//	cout<<"The random number:"<<random<<endl;
 	rotate90degree(board);
 	printBoard(board);
 }
@@ -160,7 +226,7 @@ void Sudoku::solve(){
 			cout<<"1"<<endl;
 			printBoard(board);
 		}else{
-			cout<<"0"<<endl;
+			cout<<"0";
 		}
 	}else{
 		switch(multiSolve()){
@@ -188,25 +254,18 @@ int Sudoku::multiSolve(){
 	topSolve(solveboard);
 	copyForCheck();
 	downSolve(checkboard);
-/*//solve from the check[0]
-	copyForCheck();
-	rotate90degree(checkboard);
-	topSolve(checkboard);
-	for(int i=0;i<3;i++)
-		rotate90degree(checkboard);*/
 	for(int i=0;i<Size;i++){	
 		if(board[i]==solveboard[i])
 			noAns++;
 	}
 	for(int i=0;i<Size;i++){	
-		if(solveboard[i]!=checkboard[i]){
-			solution=1;
-			i=Size;
+		if(solveboard[i]==checkboard[i]){
+			solution++;
 		}
 	}
 	if(noAns==81)
 		return 0;
-	else if(solution==0)
+	else if(solution==81)
 		return 1;//mean have exactly one solution 
 	else
 		return 2;//the solution=1,mean at least two result
