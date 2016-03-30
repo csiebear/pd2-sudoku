@@ -7,13 +7,6 @@
 
 using namespace std;
 
-Sudoku::Sudoku(){
-	int Cnt=0;
-	for(int x=0;x<Size;x++){
-		Sol[x]=0;
-	}
-}
-
 void Sudoku::giveQuestion(){
 	srand(time(NULL));	
 	int random=(rand()%10)+1;
@@ -34,65 +27,87 @@ void Sudoku::giveQuestion(){
 }
 //Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){
-	for(int i=0;i<Size;i++)
-		cin>>board[i];
+	init();
+	for(int x=0;x<length;x++)
+		for(int y=0;y<length;y++){
+			cin>>board[x*9+y];
+			board2[x][y]=board[x*9+y];
+			if(board2[x][y]==0){
+				Sol_x[Cnt++]=x;
+				Sol_y[Cnt++]=y;
+				Sol[Cnt++]=0;
+			}
+		}
 }
-
 void Sudoku::solve(){
-	int x,row,col,count=0;
-	for(x=0;x<Size;x++){
-		row=x/9;
-		col=x%9;
-		if(board[x]==0){
-			Sol[count++]=(row<<8)+(col<<4);
-		}
-	Cnt=count;
+	int zeroNum=0;
+	for(int x=0;x<Size;x++){
+		if(board[x]==0)
+			zeroNum++;
 	}
-	if(Cnt==0)
-		cout<<"0";
+	if(zeroNum==0){
+		if(validate()==1){
+			cout<<"1"<<endl;
+			print();
+		}else
+			cout<<"0";
+	}
 	else{
-	tryAns(board,0);
-	if(Ans==1){
-		cout<<"1"<<endl;
-		printBoard(Ansboard);
-	}else if(Ans==0) cout<<"0"<<endl;
-	else cout<<"2"<<endl;
+		tryAns(board2,0);
+		if (Ans==1){
+			cout<<"1"<<endl;
+			ShowAns(Solve);
+	}
+	else if (Ans==0) cout<<"0";
+	else cout<<"2";
 	}
 }
 
-int Sudoku::tryAns(int b[81],int n){
-	if(n==0){
-		Ans=0;
-	}
-	if(Ans<2){
-		if(n<Cnt) return tryNum(b,n);
-		if(++Ans<2){
-			for(int j=0;j<Size;j++)
-				Ansboard[j]=b[j];
+void Sudoku::ShowAns(int b[][9]){
+	for(int x=0; x<9; x++)
+		for(int y=0; y<9; y++){
+			if(y==8)
+				cout<<b[x][y]<<endl;
+			else	cout<<b[x][y]<<" ";
 		}
-	else
-		return 1;
-	}
 }
-int Sudoku::tryNum(int b[81], int n){
+int Sudoku::tryNum(int b[][9], int n){
 	int xx, yy, m, num, r;
-	int x= (Sol[n]>>8);
-	int y = ((Sol[n]>>4)&0x0F);
+    int x = Sol_x[n];
+	int y = Sol_y[n];
 	for(num=1, r=0; num<=9; num++){
-		b[x*9+y] = num;
-		Sol[n] = (Sol[n]&0xFF0) + num;
+		b[x][y] = num;
+		Sol[n] =  num;
 		for(m=0; m<9; m++){
 			xx = x/3*3+m%3;
 			yy = y/3*3+m/3;
-			if ((m!=y && b[x*9+m]==b[x*9+y]) || (m!=x && b[m*9+y]==b[x*9+y])|| (x!=xx && y!=yy && b[xx*9+yy]==b[x*9+y]))
+			if ((m!=y && b[x][m]==b[x][y]) || (m!=x && b[m][y]==b[x][y])|| (x!=xx && y!=yy && b[xx][yy]==b[x][y]))
 				break;
-		}
-		if (m==9 && tryAns(b, n+1)) r=1;
+		}if (m==9 && tryAns(b, n+1)) r=1;
 	}
-	b[x*9+y]=0;
+	b[x][y]=0;
 	Sol[n]&=0xFF0;
 	return r;
 }
+
+int Sudoku::tryAns(int b[][9], int n){
+	if(Ans2<=2){
+		if (n<Cnt) return tryNum(b, n);
+	}else return 1;
+	//when we have at least one we go into this function
+	if (++Ans==1){
+		rule1=true;
+		int x;
+		for(int x=0;x<81;x++){
+			if(Solve[x/9][x%9]==0)
+			Solve[x/9][x%9]=Sol[x];
+		}
+	}
+	if(++Ans2>=2)
+		rule2=true;
+	return 1;
+}
+
 
 //Print the board,if the column(i+1) equals to 9 print the number and endline,
 //else only print the number
@@ -257,4 +272,12 @@ void Sudoku::transform(){
 
 int Sudoku::validate(){
 	return 1;
+}
+
+void Sudoku::init(){
+	int Cnt=0;
+	int Ans=0;
+	int Ans2=0;
+	bool rule1=false;
+	bool rule2=false;
 }

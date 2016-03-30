@@ -5,7 +5,6 @@ using namespace std;
 
 class Sudoku{
 		public:
-			Sudoku();
 			void giveQuestion();//output 81 digits
 			void readIn();//input 81 digit,and Read in Sudoku board
 			void solve();//use the ReadIn data and output slovable
@@ -20,17 +19,19 @@ class Sudoku{
 			void transform();
 			void print();
 			void printBoard(int b[81]);
-		//	void ShowAns(int b[][9]);
-			int tryAns(int b[81],int n);
-			int tryNum(int b[81],int n);
+			void ShowAns(int b[][9]);
+			int tryAns(int b[][9],int n);
+			int tryNum(int b[][9],int n);
 			int validate();
 
 		private:
 			//the data for readIn()and solve()
-			int Sol[81];
 			int board[81];
-			int Solveboard[81];
-			int Ansboard[81];
-			int Cnt,Ans;
+			int board2[9][9];
+			int Solve[9][9];
+			int Sol[81],Sol_x[81],Sol_y[81];
+			bool rule1,rule2;
+			int Cnt,Ans,Ans2;
+			void init();
 			void rotate90degree(int b[81]);
 };
