@@ -10,9 +10,10 @@ using namespace std;
 Sudoku::Sudoku(){
 	int Cnt=0;
 	for(int x=0;x<Size;x++){
-		Sol[x]=0;
+	Sol[x]=0;
 	}
 }
+
 
 void Sudoku::giveQuestion(){
 	srand(time(NULL));	
@@ -46,7 +47,7 @@ void Sudoku::solve(){
 		if(board[x]==0){
 			Sol[count++]=(row<<8)+(col<<4);
 		}
-	Cnt=count;
+		Cnt=count;
 	}
 	if(Cnt==0)
 		cout<<"0";
@@ -54,7 +55,9 @@ void Sudoku::solve(){
 	tryAns(board,0);
 	if(Ans==1){
 		cout<<"1"<<endl;
-		printBoard(Ansboard);
+		for(x=0;x<Size;x++)
+			board[x]=Ansboard[x];
+		printBoard(board);
 	}else if(Ans==0) cout<<"0"<<endl;
 	else cout<<"2"<<endl;
 	}
@@ -251,7 +254,7 @@ void Sudoku::flip(int n){
 }
 
 void Sudoku::transform(){
-	rotate90degree(board);
+	changeNum(1,2);
 	printBoard(board);
 }
 
