@@ -62,7 +62,7 @@ void Sudoku::solve(){
 		now_col=x%9;
 		if(board[x]==0)
 			Sol[count++]=(now_row<<8)+(now_col<<4);
-		Cnt=count;	
+	Cnt=count;	
 	}
 	if(Cnt==0)
 		cout<<"0";
@@ -84,10 +84,10 @@ void Sudoku::solve(){
 }
 bool Sudoku::compare(){
 	bool diff=false;
-	for(int x;x<Size;x++){
+	for(int x=0;x<Size;x++){
 		board[x]=Ansboard[x];
 	}	
-	for(int x;x<Size;x++){
+	for(int x=0;x<Size;x++){
 		if(Ansboard[x]!=Ansboard2[x]){
 			diff=true;
 		}
