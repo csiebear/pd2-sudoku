@@ -21,16 +21,25 @@ class Sudoku{
 			void print();
 			void printBoard(int b[81]);
 		//	void ShowAns(int b[][9]);
+			bool tryExact();
+			bool compare();
 			int tryAns(int b[81],int n);
-			int tryNum(int b[81],int n);
-			int validate();
+			int tryAns2(int b[],int n);
+			int tryNumFrom1(int b[81],int n);
+			int tryNumFrom9(int b[81],int n);
+			bool validate();
 
 		private:
 			//the data for readIn()and solve()
 			int Sol[81];
 			int board[81];
 			int Solveboard[81];
-			int Ansboard[81];
-			int Cnt,Ans;
+			int Ansboard[81],Ansboard2[81];
+			bool block[10][10];
+			bool row[10][10];
+			bool col[10][10];
+			bool multiAns;
+			int Cnt,Ans,Ans2;
+			int times;
 			void rotate90degree(int b[81]);
 };

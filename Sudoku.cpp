@@ -10,8 +10,17 @@ using namespace std;
 Sudoku::Sudoku(){
 	int Cnt=0;
 	for(int x=0;x<Size;x++){
-	Sol[x]=0;
+		Sol[x]=0;
+		Ansboard[x]=0;
+		Ansboard2[x]=0;
+		multiAns=false;
 	}
+	for(int x=1;x<=length;x++)
+		for(int y=1;y<=length;y++){
+			row[x][y]=true;
+			col[x][y]=true;
+			block[x][y]=true;
+		}
 }
 
 
@@ -35,40 +44,92 @@ void Sudoku::giveQuestion(){
 }
 //Read in the Sudoku board(81 digits) and store them into the array board
 void Sudoku::readIn(){
-	for(int i=0;i<Size;i++)
+	int temp;
+	for(int i=0;i<Size;i++){
 		cin>>board[i];
+		temp=board[i];
+		row[(i/9)+1][temp]=false;	
+		col[(i%9)+1][temp]=false;
+		block[ ((i/9)/3*3) + (i%9/3)][temp]=false;
+	}
 }
 
 void Sudoku::solve(){
-	int x,row,col,count=0;
+	int x,now_row,now_col,num,count=0;
+	bool haveToChange=true;
 	for(x=0;x<Size;x++){
-		row=x/9;
-		col=x%9;
-		if(board[x]==0){
-			Sol[count++]=(row<<8)+(col<<4);
-		}
-		Cnt=count;
+		now_row=x/9;
+		now_col=x%9;
+		if(board[x]==0)
+			Sol[count++]=(now_row<<8)+(now_col<<4);
+		Cnt=count;	
 	}
 	if(Cnt==0)
 		cout<<"0";
-	else{
-	tryAns(board,0);
-	if(Ans==1){
-		cout<<"1"<<endl;
-		for(x=0;x<Size;x++)
-			board[x]=Ansboard[x];
-		printBoard(board);
-	}else if(Ans==0) cout<<"0"<<endl;
-	else cout<<"2"<<endl;
+	else if(validate()){
+		cout<<"0";//means the input board is wrong
+	}
+	else {
+		tryAns(board,0);
+		tryAns2(board,0);
+		if(Ans==0)
+			cout<<"0"<<endl;
+		if(compare())
+	   		cout<<"2"<<endl;
+		else{
+	  		cout<<"1"<<endl;
+			printBoard(board);
+		}
 	}
 }
-
+bool Sudoku::compare(){
+	bool SameOrNot;
+	for(int x;x<Size;x++){
+		board[x]=Ansboard[x];
+	}	
+	for(int x;x<Size;x++){
+		if(Ansboard[x]!=Ansboard2[x]){
+			SameOrNot=true;
+		}
+	}
+	return SameOrNot;
+}
+bool Sudoku::tryExact(){
+	int x,y,now_row,now_col,now_block,num=0;
+	int canWrite;
+	bool change=false;
+	for(x=0;x<Size;x++){
+		now_row=x/9;
+		now_col=x%9;
+		now_block=x/9/3*3+x%9/3;
+		canWrite=0;
+		if(board[x]==0){
+			for(y=1;y<=length;y++){
+				if(row[now_row+1][y]&&col[now_col+1][y]&&block[now_block][y]){
+					canWrite++;		
+					num=y;
+				}
+			}
+			if(canWrite==1){
+				board[x]=num;
+				row[now_row+1][num]=false;
+				col[now_col+1][num]=false;
+				block[now_block][num]=false;
+				change=true;
+			}
+		}
+	}
+	return change;
+}
 int Sudoku::tryAns(int b[81],int n){
 	if(n==0){
 		Ans=0;
 	}
-	if(Ans<2){
-		if(n<Cnt) return tryNum(b,n);
+	if(Ans<1){
+		if(n<Cnt){
+			times++;
+			return tryNumFrom1(b,n);
+		}
 		if(++Ans<2){
 			for(int j=0;j<Size;j++)
 				Ansboard[j]=b[j];
@@ -77,7 +138,25 @@ int Sudoku::tryAns(int b[81],int n){
 		return 1;
 	}
 }
-int Sudoku::tryNum(int b[81], int n){
+
+int Sudoku::tryAns2(int b[81],int n){
+	if(n==0){
+		Ans2=0;
+	}
+	if(Ans2<1){
+		if(n<Cnt){
+			times++;
+			return tryNumFrom9(b,n);
+		}
+		if(++Ans2<2){
+			for(int j=0;j<Size;j++)
+				Ansboard2[j]=b[j];
+		}
+	else
+		return 1;
+	}
+}
+int Sudoku::tryNumFrom1(int b[81], int n){
 	int xx, yy, m, num, r;
 	int x= (Sol[n]>>8);
 	int y = ((Sol[n]>>4)&0x0F);
@@ -97,6 +176,25 @@ int Sudoku::tryNum(int b[81], int n){
 	return r;
 }
 
+int Sudoku::tryNumFrom9(int b[81], int n){
+	int xx, yy, m, num, r;
+	int x= (Sol[n]>>8);
+	int y = ((Sol[n]>>4)&0x0F);
+	for(num=9, r=0; num>=1; num--){
+		b[x*9+y] = num;
+		Sol[n] = (Sol[n]&0xFF0) + num;
+		for(m=0; m<9; m++){
+			xx = x/3*3+m%3;
+			yy = y/3*3+m/3;
+			if ((m!=y && b[x*9+m]==b[x*9+y]) || (m!=x && b[m*9+y]==b[x*9+y])|| (x!=xx && y!=yy && b[xx*9+yy]==b[x*9+y]))
+				break;
+		}
+		if (m==9 && tryAns2(b, n+1)) r=1;
+	}
+	b[x*9+y]=0;
+	Sol[n]&=0xFF0;
+	return r;
+}
 //Print the board,if the column(i+1) equals to 9 print the number and endline,
 //else only print the number
 void Sudoku::printBoard(int b[81]){
@@ -258,6 +356,22 @@ void Sudoku::transform(){
 	printBoard(board);
 }
 
-int Sudoku::validate(){
-	return 1;
+bool Sudoku::validate(){
+	bool inputFalse=false;
+	int now_row,now_col,xx,yy;
+	for(int x=0;x<Size;x++){
+		now_row=x/9;
+		now_col=x%9;
+		if(board[x]<0||board[x]>10)
+			inputFalse=true;
+		for(int i=0;i<length;i++){
+			xx=now_row/3*3+i%3;
+			yy=now_col/3*3+i/3;
+			if(	(i!=now_col && board[x]==board[now_row*9+i]) ||
+				(i!=now_row && board[x]==board[i*9+now_col]) ||
+				(i!=xx && i!=yy && board[x]==board[xx*9+yy]))	
+				inputFalse=true;
+		}
+	}
+	return inputFalse;
 }
