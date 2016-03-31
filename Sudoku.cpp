@@ -74,7 +74,7 @@ void Sudoku::solve(){
 		tryAns2(board,0);
 		if(Ans==0)
 			cout<<"0"<<endl;
-		if(compare())
+		else if(compare())
 	   		cout<<"2"<<endl;
 		else{
 	  		cout<<"1"<<endl;
