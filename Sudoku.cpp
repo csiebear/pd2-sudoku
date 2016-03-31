@@ -64,8 +64,13 @@ void Sudoku::solve(){
 			Sol[count++]=(now_row<<8)+(now_col<<4);
 	Cnt=count;	
 	}
-	if(Cnt==0)
-		cout<<"0";
+	if(Cnt==0){
+		if(!validate()){
+			cout<<"1"<<endl;
+			printBoard(board);
+		}else
+			cout<<"0"<<endl;
+	}
 	else if(validate()){
 		cout<<"0";//means the input board is wrong
 	}
