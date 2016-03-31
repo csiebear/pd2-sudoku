@@ -83,16 +83,16 @@ void Sudoku::solve(){
 	}
 }
 bool Sudoku::compare(){
-	bool SameOrNot;
+	bool diff=false;
 	for(int x;x<Size;x++){
 		board[x]=Ansboard[x];
 	}	
 	for(int x;x<Size;x++){
 		if(Ansboard[x]!=Ansboard2[x]){
-			SameOrNot=true;
+			diff=true;
 		}
 	}
-	return SameOrNot;
+	return diff;
 }
 bool Sudoku::tryExact(){
 	int x,y,now_row,now_col,now_block,num=0;
@@ -357,21 +357,17 @@ void Sudoku::transform(){
 }
 
 bool Sudoku::validate(){
-	bool inputFalse=false;
-	int now_row,now_col,xx,yy;
+	bool input=false;
+	int now_row,now_col;
 	for(int x=0;x<Size;x++){
 		now_row=x/9;
 		now_col=x%9;
-		if(board[x]<0||board[x]>10)
-			inputFalse=true;
-		for(int i=0;i<length;i++){
-			xx=now_row/3*3+i%3;
-			yy=now_col/3*3+i/3;
-			if(	(i!=now_col && board[x]==board[now_row*9+i]) ||
-				(i!=now_row && board[x]==board[i*9+now_col]) ||
-				(i!=xx && i!=yy && board[x]==board[xx*9+yy]))	
-				inputFalse=true;
-		}
+		if(board[x]!=0){	
+			for(int i=0;i<9;i++){
+				if(i!=now_row && board[x]==board[i*9+now_col])	input=true;
+				if(i!=now_col && board[x]==board[now_row*9+i]) 	input=true;
+			}
+		}	
 	}
-	return inputFalse;
+	return input;
 }
