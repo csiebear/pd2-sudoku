@@ -1,0 +1,51 @@
+作者：李碩軒
+學號：F74004101
+作業：ProjectSudoku
+檔案：
+	1.執行檔：solve transform giveQuestion
+	2.程式碼：Sudoku.cpp Sudoku.h
+	3.其他：Makefile,README
+用途：
+
+Sudoku.h：定義所有Sudoku.cpp會用到的member data and member funciton
+Sudoku.cpp:實作所有member function
+	Sudoku()：
+			建構子，用於初始化可能使用到的member data。
+			解題會使用到的陣列Sol、Ansboard 1&2讓初始值為0。
+			判斷有無多組解的boolean值初始化為false。//代表沒有多組解
+			row、col、block代表該列、行、格" 可不可以"填入對應的數字
+			初始化為true，代表一開始所有數字皆可以填。
+	readIn()：
+			用來讀入盤面(81 digits)，並將其存入member data當中。
+			讀入的盤面，設定row、col、block成false，代表此格已經不能填入。		
+
+	giveQuestion()：
+			出題function，利用亂數，隨機執行transform function。
+			最後將盤面輸出。
+	
+	solve()：現在的member data-board[]做解題的動作。
+			Step1：
+				哪些是待解的格子?
+				如果該盤面的數字為0，代表是待解的格子。將其放入Sol當中，紀錄其x,y值(row、column)。
+				並同步計算待解的格子數目。
+			Step2：
+				進入判斷邏輯!
+				如果盤面沒有待解的格子(no digit equal 0)則我們直接檢查盤面是否為正確(合法)的。
+					不合法：輸出0
+					合法：	輸出1
+			Step3：
+				有待解個格子，則執行兩次backtracking演算法(tryAns、tryAns2)，來解目前的board。如果解題演算法跑完，Ans變數為0，
+				代表此題無解!-->輸出0
+			Step4：
+				如果有解，要判斷是否為"多組解"或是"單一解"，利用compare()的回傳值來判斷。
+				如果回傳compare為true代表兩次的解答盤面有不同處，也就是至少有兩組解，則輸出2。
+				如果回傳值不為true(false)代表兩次解答的盤面相同，我們就認定他有唯一解，則輸出1。
+	compare()：比較兩次演算法跑出的解答是不是相同，回傳diff(false：相同 true：不相同)
+			用for迴圈檢查Ansboard 和Ansboard2裡面的81個值是否有不同之處。
+
+
+Usage：
+	Sudoku.h：	
+		Define all member data and member in Sudoku.cpp
+	Sudoku.cpp：	
+		Implement all member function
