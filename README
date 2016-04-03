@@ -42,7 +42,7 @@ Sudoku.cpp:實作所有member function
 				如果回傳值不為true(false)代表兩次解答的盤面相同，我們就認定他有唯一解，則輸出1。
 	compare()：比較兩次演算法跑出的解答是不是相同，回傳diff(false：相同 true：不相同)
 			用for迴圈檢查Ansboard 和Ansboard2裡面的81個值是否有不同之處。
-
+	other function implement the project(TA's) requirement.
 
 Usage：
 	Sudoku.h：	
