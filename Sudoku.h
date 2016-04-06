@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -35,9 +34,9 @@ class Sudoku{
 			int board[81];
 			int Solveboard[81];
 			int Ansboard[81],Ansboard2[81];
-			bool block[10][10];
-			bool row[10][10];
-			bool col[10][10];
+//			bool block[10][10];
+//			bool row[10][10];
+//			bool col[10][10];
 			bool multiAns;
 			int Cnt,Ans,Ans2;
 			int times;

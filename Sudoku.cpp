@@ -15,12 +15,12 @@ Sudoku::Sudoku(){
 		Ansboard2[x]=0;
 		multiAns=false;
 	}
-	for(int x=1;x<=length;x++)
+/*	for(int x=1;x<=length;x++)
 		for(int y=1;y<=length;y++){
 			row[x][y]=true;
 			col[x][y]=true;
 			block[x][y]=true;
-		}
+		}*/
 }
 
 
@@ -28,15 +28,15 @@ void Sudoku::giveQuestion(){
 	srand(time(NULL));	
 	int random=(rand()%3)+1;
 //	cout<<"The random number:"<<random<<endl;
-	int q1[81]={5,3,0,0,7,0,0,0,0,
-				6,0,0,1,9,5,0,0,0,
-				0,9,8,0,0,0,0,6,0,
-				8,0,0,0,6,0,0,0,3,
-				4,0,0,8,0,3,0,0,1,
-				7,0,0,0,2,0,0,0,6,
-				0,6,0,0,0,0,2,8,0,
-				0,0,0,4,1,9,0,0,5,
-				0,0,0,0,8,0,0,7,9	
+	int q1[81]={8,0,0,0,0,0,0,0,0,
+				0,0,3,6,0,0,0,0,0,
+				0,7,0,0,9,0,2,0,0,
+				0,5,0,0,0,7,0,0,0,
+				0,0,0,0,4,5,7,0,0,
+				0,0,0,1,0,0,0,3,0,
+				0,0,1,0,0,0,0,6,8,
+				0,0,8,5,0,0,0,1,0,
+				0,9,0,0,0,0,4,0,0	
 				};
 	for(int i=0;i<Size;i++){
 		board[i]=q1[i];
@@ -87,18 +87,19 @@ void Sudoku::solve(){
 	   		cout<<"2"<<endl;
 		else{
 	  		cout<<"1"<<endl;
-			printBoard(board);
+			printBoard(Ansboard);
 		}
 	}
 }
 bool Sudoku::compare(){
 	bool diff=false;
-	for(int x=0;x<Size;x++){
+/*	for(int x=0;x<Size;x++){
 		board[x]=Ansboard[x];
-	}	
+	}	*/
 	for(int x=0;x<Size;x++){
 		if(Ansboard[x]!=Ansboard2[x]){
 			diff=true;
+			break;
 		}
 	}
 	return diff;
