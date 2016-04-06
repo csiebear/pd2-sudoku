@@ -20,7 +20,7 @@ class Sudoku{
 			void print();
 			void printBoard(int b[81]);
 		//	void ShowAns(int b[][9]);
-			bool tryExact();
+		//	bool tryExact();
 			bool compare();
 			int tryAns(int b[81],int n);
 			int tryAns2(int b[],int n);

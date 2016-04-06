@@ -104,6 +104,7 @@ bool Sudoku::compare(){
 	}
 	return diff;
 }
+/*
 bool Sudoku::tryExact(){
 	int x,y,now_row,now_col,now_block,num=0;
 	int canWrite;
@@ -131,6 +132,7 @@ bool Sudoku::tryExact(){
 	}
 	return change;
 }
+*/
 int Sudoku::tryAns(int b[81],int n){
 	if(n==0){
 		Ans=0;
